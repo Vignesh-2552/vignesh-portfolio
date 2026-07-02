@@ -18,9 +18,9 @@ export function About() {
         />
 
         <StaggerChildren className="grid gap-8 lg:grid-cols-2">
-          <StaggerItem>
-            <GlowCard className="rounded-2xl">
-              <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur-md">
+          <StaggerItem className="h-full">
+            <GlowCard className="h-full rounded-2xl">
+              <div className="h-full rounded-2xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur-md">
                 <p className="text-base leading-relaxed text-zinc-300">
                   {personal.summary}
                 </p>
@@ -40,9 +40,9 @@ export function About() {
             </GlowCard>
           </StaggerItem>
 
-          <StaggerItem>
-            <GlowCard className="rounded-2xl">
-              <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur-md">
+          <StaggerItem className="h-full">
+            <GlowCard className="h-full rounded-2xl">
+              <div className="h-full rounded-2xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur-md">
                 <h3 className="mb-5 font-semibold text-white">Core Competencies</h3>
                 <ul className="space-y-3">
                   {competencies.map((item) => (

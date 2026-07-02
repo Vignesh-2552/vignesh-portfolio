@@ -1,3 +1,5 @@
+import type { AgentGraphData } from "@/components/motion/agent-graph";
+
 export const personal = {
   name: "Vignesh A",
   title: "AI Engineer",
@@ -125,6 +127,20 @@ export const projects = [
       "Enterprise agentic support platform with MCP tool servers, streaming chat, and human-in-the-loop escalation for ticket routing, triage, and resolution.",
     tech: ["Next.js 15", "FastAPI", "LangGraph", "FastMCP", "AssistantUI"],
     ownership: ["MCP Tool Server", "Frontend ~50%", "API Routes ~50%"],
+    graph: {
+      caption: "Interrupt-driven support flow",
+      nodes: [
+        { id: "msg", label: "User Msg", x: 6, y: 52, w: 70 },
+        { id: "router", label: "Agent Router", x: 104, y: 52, w: 82, accent: "cyan" },
+        { id: "tools", label: "MCP Tools", x: 216, y: 10, w: 78, accent: "cyan" },
+        { id: "human", label: "Human Loop", x: 216, y: 94, w: 78, accent: "violet" },
+      ],
+      edges: [
+        { from: "msg", to: "router" },
+        { from: "router", to: "tools" },
+        { from: "router", to: "human", dashed: true },
+      ],
+    } satisfies AgentGraphData,
     highlights: [
       "Designed schema and routing for 10+ business tools with typed Pydantic models — clean read vs. write boundaries eliminated hallucination in transactional ops.",
       "Built streaming chat workspace, ticket management, and auth flows with AssistantUI mid-stream interrupt support aligned to escalation nodes.",
@@ -138,6 +154,20 @@ export const projects = [
       "Conversational commerce platform with hybrid product retrieval, threaded streaming chat, and admin content management for product discovery.",
     tech: ["Next.js 15", "FastAPI", "LangGraph", "QdrantDB", "AssistantUI"],
     ownership: ["CaddioWave Retrieval", "Orchestration Nodes", "Frontend ~50%"],
+    graph: {
+      caption: "CaddioWave retrieval subgraph",
+      nodes: [
+        { id: "intent", label: "Intent Classify", x: 6, y: 10, w: 88 },
+        { id: "search", label: "Hybrid Search · Qdrant", x: 168, y: 10, w: 126, accent: "cyan" },
+        { id: "rerank", label: "Cross-Enc Rerank", x: 6, y: 94, w: 100 },
+        { id: "resp", label: "Product Response", x: 186, y: 94, w: 108, accent: "violet" },
+      ],
+      edges: [
+        { from: "intent", to: "search" },
+        { from: "search", to: "rerank" },
+        { from: "rerank", to: "resp" },
+      ],
+    } satisfies AgentGraphData,
     highlights: [
       "Owned CaddioWave retrieval subgraph end-to-end — intent classifier → hybrid dense/lexical search → cross-encoder reranking → product response generation.",
       "Built orchestration entry nodes for message validation, intent-based routing, and handoff to retrieval vs. knowledge subgraphs.",
@@ -151,6 +181,22 @@ export const projects = [
       "Multi-agent platform converting feature ideas into PRDs, architecture docs, and deployment guidance through a 5-stage approval pipeline.",
     tech: ["React", "TypeScript", "FastAPI", "LangGraph", "SSE"],
     ownership: ["Frontend E2E", "Backend Integration"],
+    graph: {
+      caption: "5-stage approval pipeline",
+      nodes: [
+        { id: "idea", label: "Idea", x: 6, y: 10, w: 44 },
+        { id: "prd", label: "PRD", x: 76, y: 10, w: 40 },
+        { id: "arch", label: "Architecture", x: 142, y: 10, w: 76, accent: "cyan" },
+        { id: "plan", label: "Impl Plan", x: 30, y: 94, w: 80 },
+        { id: "deploy", label: "Deploy Guide", x: 180, y: 94, w: 100, accent: "violet" },
+      ],
+      edges: [
+        { from: "idea", to: "prd" },
+        { from: "prd", to: "arch" },
+        { from: "arch", to: "plan" },
+        { from: "plan", to: "deploy" },
+      ],
+    } satisfies AgentGraphData,
     highlights: [
       "Engineered complete React + TypeScript frontend — protected routes, team dashboards, SSE-backed live agent messaging, and pipeline approval views.",
       "5-stage pipeline: feature idea → PRD → architecture → implementation plan → deployment guidance with approval-gate logic.",

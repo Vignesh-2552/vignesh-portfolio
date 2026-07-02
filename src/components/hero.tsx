@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowDown, Mail, MapPin } from "lucide-react";
+import { ArrowDown, FileText, Mail, MapPin } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { GitHubIcon, LinkedInIcon } from "@/components/icons";
 import { AuroraBackground } from "@/components/motion/aurora-background";
@@ -93,6 +93,15 @@ export function Hero() {
               label: "View Projects",
               primary: true,
               icon: null,
+              external: false,
+            },
+            {
+              key: "resume",
+              href: "/resume",
+              label: "Resume",
+              primary: false,
+              icon: FileText,
+              external: true,
             },
             {
               key: "contact",
@@ -100,6 +109,7 @@ export function Hero() {
               label: "Contact Me",
               primary: false,
               icon: Mail,
+              external: false,
             },
           ].map((btn) => (
             <motion.div
@@ -111,6 +121,8 @@ export function Hero() {
             >
               <a
                 href={btn.href}
+                target={btn.external ? "_blank" : undefined}
+                rel={btn.external ? "noopener noreferrer" : undefined}
                 className={cn(
                   buttonVariants({ size: "lg" }),
                   btn.primary

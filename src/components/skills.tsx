@@ -19,9 +19,9 @@ export function Skills() {
 
         <StaggerChildren className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {skills.map((group) => (
-            <StaggerItem key={group.category}>
-              <GlowCard className="rounded-2xl">
-                <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-md">
+            <StaggerItem key={group.category} className="h-full">
+              <GlowCard className="h-full rounded-2xl">
+                <div className="h-full rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-md">
                   <h3 className="mb-4 font-mono text-sm tracking-wider text-cyan-400 uppercase">
                     {group.category}
                   </h3>

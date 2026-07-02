@@ -53,7 +53,15 @@ export function Navbar() {
           ))}
         </ul>
 
-        <div className="hidden md:block">
+        <div className="hidden items-center gap-3 md:flex">
+          <a
+            href="/resume"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-zinc-400 transition-colors hover:text-cyan-400"
+          >
+            Resume
+          </a>
           <motion.a
             href={`mailto:${personal.email}`}
             className={cn(
@@ -108,6 +116,21 @@ export function Navbar() {
                 initial={reduced ? false : { x: -12, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ ...easeTransition, delay: navLinks.length * 0.05 }}
+              >
+                <a
+                  href="/resume"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-sm text-zinc-300"
+                  onClick={() => setOpen(false)}
+                >
+                  Resume
+                </a>
+              </motion.li>
+              <motion.li
+                initial={reduced ? false : { x: -12, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ ...easeTransition, delay: (navLinks.length + 1) * 0.05 }}
               >
                 <a
                   href={`mailto:${personal.email}`}

@@ -158,3 +158,9 @@
 .animate-gradient-shift {
   animation: gradient-shift 4s ease infinite;
 }
+
+@media print {
+  @page {
+    margin: 0.6in;
+  }
+}

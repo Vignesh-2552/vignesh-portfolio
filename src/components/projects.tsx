@@ -9,6 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { AgentGraph } from "@/components/motion/agent-graph";
 import { GlowCard } from "@/components/motion/glow-card";
 import { StaggerChildren, StaggerItem } from "@/components/motion/stagger";
 import { SectionHeading } from "@/components/section-heading";
@@ -57,6 +58,7 @@ export function Projects() {
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="flex flex-1 flex-col">
+                    <AgentGraph graph={project.graph} />
                     <p className="mb-4 text-sm leading-relaxed text-zinc-400">
                       {project.description}
                     </p>

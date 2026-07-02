@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { siteUrl } from "@/lib/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -13,6 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "Vignesh A — AI Engineer",
   description:
     "AI Engineer focused on getting agentic systems to production — MCP tool servers, hybrid RAG pipelines, FastAPI services, and LLM observability at Brightspot Technology Solutions.",
