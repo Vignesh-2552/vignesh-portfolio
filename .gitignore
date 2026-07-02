@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# editor / agent tooling (local only)
+.cursor/
+.claude/
+.playwright-mcp/
+/openspec/
+
+# resume source docs (content lives in src/data/portfolio.ts)
+/doc/
+/Vignesh_A_Resume.md
