@@ -11,11 +11,11 @@ export const personal = {
   tagline:
     "Getting agentic systems to production — MCP tool servers, hybrid RAG pipelines, FastAPI services, and LLM observability that hold up under real load.",
   summary:
-    "AI Engineer focused on getting agentic systems to production — specifically the backend infrastructure (MCP tool servers, hybrid RAG pipelines, FastAPI services, LLM observability) that determines whether AI products hold up under real load. Owns backend architecture across 3 AI platforms at Brightspot serving customer support, commerce, and development automation. Made a deliberate, self-directed transition from PHP/MySQL backend engineering into LangGraph multi-agent architecture in 2024.",
+    "AI Engineer focused on building production-ready agentic systems — specifically the backend infrastructure (MCP tool servers, hybrid RAG pipelines, FastAPI services, LLM observability) that determines whether AI products are ready to scale. Owns backend architecture across 3 AI platforms at Brightspot serving customer support, commerce, and development automation. Made a deliberate, self-directed transition from PHP/MySQL backend engineering into LangGraph multi-agent architecture in 2024.",
 };
 
 export const highlights = [
-  { value: "3", label: "Production AI Platforms" },
+  { value: "3", label: "AI Platforms" },
   { value: "60%", label: "Support Automation Gain" },
   { value: "40%", label: "RAG Precision Improvement" },
 ];
@@ -97,11 +97,11 @@ export const experience = [
     period: "Jul 2024 – Present",
     location: "Coimbatore, Tamil Nadu",
     highlights: [
-      "Owned backend architecture, tool-server design, and observability infrastructure across 3 production AI platforms (Ara Support, Ara Caddio, Ara-Cascade) — built on Python, FastAPI, LangGraph, and FastMCP.",
-      "Developed LangGraph agent workflows with subgraph decomposition, persistent memory, interrupt-driven human-in-the-loop escalation, LLM tool-calling, and conditional routing — reducing manual customer support handling by 60%.",
-      "Built FastMCP tool servers exposing 10+ structured business tools (orders, customers, refunds, reservations, products) enabling agents to execute deterministic workflows over live CRM data.",
-      "Architected hybrid RAG pipelines using QdrantDB (dense + sparse), query rewriting, cohort reranking, and cross-encoder reranking — improving top-5 retrieval precision by 40%.",
-      "Built end-to-end AI observability stack — LangSmith for agent tracing, OpenTelemetry for LLM metrics routed to Datadog and CloudWatch, SNS alerting, and AWS WAF at the API gateway.",
+      "Owned backend architecture, tool-server design, and observability infrastructure across 3 AI platforms currently in pre-production (Ara Support, Ara Caddio, Ara-Cascade) — built on Python, FastAPI, LangGraph, and FastMCP.",
+      "Developed LangGraph agent workflows with subgraph decomposition, persistent memory, interrupt-driven human-in-the-loop escalation, LLM tool-calling, and conditional routing — reducing manual customer support handling by 60% in internal pilot testing across ticket routing, triage, and resolution flows.",
+      "Built FastMCP tool servers exposing 10+ structured business tools (orders, customers, refunds, reservations, products) enabling agents to execute deterministic workflows over live CRM data, eliminating free-form hallucination in transactional operations.",
+      "Architected hybrid RAG pipelines using QdrantDB (dense + sparse), query rewriting, cohort reranking, and cross-encoder reranking — improving top-5 retrieval precision by 40% over cosine similarity baseline (evaluated on curated test sets).",
+      "Built end-to-end AI observability stack — LangSmith for agent node tracing and LLM response quality evaluation; OpenTelemetry for LLM latency, token usage, and error metrics routed to Datadog and CloudWatch; CloudWatch alarms with SNS for proactive alerting; AWS WAF at the API gateway layer.",
       "Developed async FastAPI services with SSE streaming for sub-second first-token delivery and real-time webhook ingestion endpoints across all three platforms.",
       "Built significant frontend across all three platforms — streaming chat workspace, ticket management dashboard, product discovery UI, and pipeline approval views using Next.js 15, React, TypeScript, and AssistantUI.",
     ],
@@ -144,7 +144,7 @@ export const projects = [
     highlights: [
       "Designed schema and routing for 10+ business tools with typed Pydantic models — clean read vs. write boundaries eliminated hallucination in transactional ops.",
       "Built streaming chat workspace, ticket management, and auth flows with AssistantUI mid-stream interrupt support aligned to escalation nodes.",
-      "Implemented escalation and tool-dispatch nodes — interrupt-driven design reduced manual support handling by 60%.",
+      "Implemented escalation and tool-dispatch nodes — interrupt-driven design reduced manual support handling by 60% in internal pilot testing.",
     ],
   },
   {
