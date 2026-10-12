@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { ArrowRight, ArrowUpRight, MapPin } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
+import { useReducedMotion } from "@/lib/motion";
 import { GitHubIcon, LinkedInIcon } from "@/components/icons";
 import { BackgroundPaths } from "@/components/motion/background-paths";
 import { CountUp } from "@/components/motion/count-up";
@@ -46,12 +47,12 @@ function RotatingWords() {
 
 export function Hero() {
   const reduced = useReducedMotion();
-  const letters = personal.name.split("");
+  const words = personal.name.split(" ");
 
   return (
     <section
       id="top"
-      className="relative flex min-h-screen w-full items-center justify-center overflow-hidden px-4 pt-24 pb-28 sm:px-6"
+      className="relative flex min-h-svh w-full items-center justify-center overflow-hidden px-4 pt-24 pb-28 sm:px-6"
     >
       <BackgroundPaths />
       <Spotlight className="-top-40 left-0 md:-top-20 md:left-60" fill="#a5f3fc" />
@@ -59,7 +60,7 @@ export function Hero() {
       <div className="relative z-10 mx-auto max-w-5xl text-center">
         <motion.a
           href="#contact"
-          className="group mb-10 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] py-1 pr-3 pl-1 text-sm text-zinc-300 backdrop-blur-md transition-colors hover:border-white/20"
+          className="group mb-10 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] py-1 pr-3 pl-1 text-xs text-zinc-300 sm:text-sm backdrop-blur-md transition-colors hover:border-white/20"
           initial={reduced ? false : { opacity: 0, y: -12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
@@ -73,18 +74,34 @@ export function Hero() {
         </motion.a>
 
         {/* Letter-by-letter spring title (Background Paths) */}
-        <h1 className="text-6xl font-bold tracking-tighter sm:text-8xl md:text-9xl">
-          {letters.map((letter, i) => (
-            <motion.span
-              key={i}
-              className="inline-block bg-linear-to-b from-white to-white/60 bg-clip-text text-transparent"
-              initial={reduced ? false : { y: 100, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.15 + i * 0.05, type: "spring", stiffness: 150, damping: 25 }}
-            >
-              {letter === " " ? " " : letter}
-            </motion.span>
-          ))}
+        <h1 className="text-5xl font-bold tracking-tighter min-[400px]:text-6xl sm:text-8xl md:text-9xl">
+          {/* Letters grouped per word so narrow screens never break mid-word */}
+          {words.map((word, w) => {
+            const offset = words.slice(0, w).join(" ").length + (w > 0 ? 1 : 0);
+            return (
+              <Fragment key={w}>
+                {w > 0 && " "}
+                <span className="inline-block whitespace-nowrap">
+                  {word.split("").map((letter, i) => (
+                    <motion.span
+                      key={i}
+                      className="inline-block bg-linear-to-b from-white to-white/60 bg-clip-text text-transparent"
+                      initial={reduced ? false : { y: 100, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{
+                        delay: 0.15 + (offset + i) * 0.05,
+                        type: "spring",
+                        stiffness: 150,
+                        damping: 25,
+                      }}
+                    >
+                      {letter}
+                    </motion.span>
+                  ))}
+                </span>
+              </Fragment>
+            );
+          })}
         </h1>
 
         <motion.h2

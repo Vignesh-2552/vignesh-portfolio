@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
-import { viewport } from "@/lib/motion";
+import { motion } from "motion/react";
+import { useReducedMotion, viewport } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 interface SectionHeadingProps {

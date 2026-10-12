@@ -1,19 +1,34 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   motion,
-  useReducedMotion,
   useScroll,
   useTransform,
   type MotionValue,
 } from "motion/react";
+import { useReducedMotion } from "@/lib/motion";
 import { AgentGraph } from "@/components/motion/agent-graph";
 import { GlowingEffect } from "@/components/motion/glowing-effect";
 import { SectionHeading } from "@/components/section-heading";
 import { projects } from "@/data/portfolio";
 
 type Project = (typeof projects)[number];
+
+// Keep in sync with the `stack` variant in globals.css
+const STACK_QUERY = "(min-width: 64rem) and (min-height: 50rem)";
+
+function useStacked() {
+  const [stacked, setStacked] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia(STACK_QUERY);
+    const update = () => setStacked(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+  return stacked;
+}
 
 const accents = [
   "from-cyan-400/20 via-transparent",
@@ -25,10 +40,12 @@ function ProjectCard({
   project,
   index,
   progress,
+  stacked,
 }: {
   project: Project;
   index: number;
   progress: MotionValue<number>;
+  stacked: boolean;
 }) {
   const reduced = useReducedMotion();
   const total = projects.length;
@@ -37,15 +54,15 @@ function ProjectCard({
 
   return (
     <div
-      className={index < total - 1 ? "md:sticky md:h-[calc(100vh-7rem)] md:pt-4" : "md:sticky md:pt-4"}
+      className={index < total - 1 ? "stack:sticky stack:h-[calc(100vh-7rem)] stack:pt-4" : "stack:sticky stack:pt-4"}
       style={{ top: `calc(6rem + ${index * 1.5}rem)` }}
     >
       <motion.article
-        style={{ scale: reduced ? 1 : scale, transformOrigin: "top center" }}
+        style={{ scale: reduced || !stacked ? 1 : scale, transformOrigin: "top center" }}
         className="relative rounded-[1.75rem] border border-white/10 bg-zinc-950 p-2.5"
       >
         <GlowingEffect spread={40} proximity={64} borderWidth={3} />
-        <div className="relative grid gap-8 overflow-hidden rounded-[1.25rem] border border-white/[0.06] bg-zinc-950 p-6 sm:p-8 lg:grid-cols-[1.1fr_1fr] lg:p-10">
+        <div className="relative grid gap-8 overflow-hidden rounded-[1.25rem] border border-white/[0.06] bg-zinc-950 p-5 sm:p-8 lg:grid-cols-[1.1fr_1fr] lg:p-10">
           <div
             className={`pointer-events-none absolute -top-24 -left-24 h-72 w-72 rounded-full bg-radial ${accents[index % accents.length]} to-transparent blur-2xl`}
           />
@@ -54,7 +71,7 @@ function ProjectCard({
             <span className="font-mono text-xs tracking-widest text-zinc-500 uppercase">
               {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")} · AI Platform
             </span>
-            <h3 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+            <h3 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-4xl">
               {project.name}
             </h3>
             <p className="mt-1 text-cyan-300">{project.subtitle}</p>
@@ -100,6 +117,7 @@ function ProjectCard({
 
 export function Projects() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const stacked = useStacked();
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
@@ -114,9 +132,9 @@ export function Projects() {
           description="Production AI platforms spanning agentic support, conversational commerce, and multi-agent development."
         />
 
-        <div ref={containerRef} className="space-y-8 md:space-y-0">
+        <div ref={containerRef} className="space-y-8 stack:space-y-0">
           {projects.map((project, i) => (
-            <ProjectCard key={project.name} project={project} index={i} progress={scrollYProgress} />
+            <ProjectCard key={project.name} project={project} index={i} progress={scrollYProgress} stacked={stacked} />
           ))}
         </div>
       </div>

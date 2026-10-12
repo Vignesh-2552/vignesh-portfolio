@@ -2,7 +2,8 @@
 
 // Adapted from Magic UI "Animated List" (21st.dev).
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { AnimatePresence, motion, useInView, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion, useInView } from "motion/react";
+import { useReducedMotion } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 interface AnimatedListProps {

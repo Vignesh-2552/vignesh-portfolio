@@ -4,6 +4,13 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Desktop viewports tall enough to show a whole project card while it is pinned */
+@custom-variant stack {
+  @media (min-width: 64rem) and (min-height: 50rem) {
+    @slot;
+  }
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

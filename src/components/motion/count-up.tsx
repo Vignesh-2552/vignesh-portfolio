@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useInView, useReducedMotion } from "motion/react";
+import { motion, useInView } from "motion/react";
+import { useReducedMotion } from "@/lib/motion";
 
 interface CountUpProps {
   value: string;
@@ -20,7 +21,7 @@ export function CountUp({ value, className, duration = 1.8 }: CountUpProps) {
   const isInView = useInView(ref, { once: true, margin: "-40px" });
   const reduced = useReducedMotion();
   const { number, suffix } = parseValue(value);
-  const [display, setDisplay] = useState(reduced || number === null ? value : `0${suffix}`);
+  const [display, setDisplay] = useState(number === null ? value : `0${suffix}`);
 
   useEffect(() => {
     if (!isInView || reduced || number === null) return;
@@ -48,11 +49,11 @@ export function CountUp({ value, className, duration = 1.8 }: CountUpProps) {
     <motion.span
       ref={ref}
       className={className}
-      initial={reduced ? false : { opacity: 0, scale: 0.5 }}
-      animate={reduced ? undefined : { opacity: 1, scale: 1 }}
-      transition={{ type: "spring", stiffness: 200, damping: 20 }}
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={reduced ? { duration: 0 } : { type: "spring", stiffness: 200, damping: 20 }}
     >
-      {display}
+      {reduced ? value : display}
     </motion.span>
   );
 }

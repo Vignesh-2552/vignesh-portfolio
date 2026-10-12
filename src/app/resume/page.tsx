@@ -18,7 +18,7 @@ export default function ResumePage() {
   return (
     <div className="min-h-screen bg-white text-zinc-900 print:bg-white">
       <PrintButton />
-      <div className="mx-auto max-w-3xl px-8 py-16 print:px-0 print:py-0">
+      <div className="mx-auto max-w-3xl px-5 py-12 sm:px-8 sm:py-16 print:px-0 print:py-0">
         <header className="border-b border-zinc-300 pb-4">
           <h1 className="text-3xl font-bold tracking-tight">{personal.name}</h1>
           <p className="mt-1 text-lg text-zinc-700">{personal.headline}</p>
@@ -46,7 +46,7 @@ export default function ResumePage() {
           </h2>
           <dl className="mt-2 space-y-1">
             {skills.map((group) => (
-              <div key={group.category} className="flex gap-2 text-sm">
+              <div key={group.category} className="flex flex-col text-sm sm:flex-row sm:gap-2 print:flex-row print:gap-2">
                 <dt className="w-28 shrink-0 font-semibold text-zinc-700">
                   {group.category}
                 </dt>
@@ -109,7 +109,7 @@ export default function ResumePage() {
           <h2 className="text-xs font-bold tracking-widest text-zinc-500 uppercase">
             Core Competencies
           </h2>
-          <ul className="mt-2 list-disc columns-2 gap-x-8 pl-5">
+          <ul className="mt-2 list-disc columns-1 gap-x-8 pl-5 sm:columns-2 print:columns-2">
             {competencies.map((c) => (
               <li key={c} className="text-sm leading-relaxed text-zinc-700">
                 {c}

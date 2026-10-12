@@ -1,12 +1,12 @@
 "use client";
 
 import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import { GitHubIcon, LinkedInIcon } from "@/components/icons";
 import { GlowingEffect } from "@/components/motion/glowing-effect";
 import { LampContainer } from "@/components/motion/lamp";
 import { personal } from "@/data/portfolio";
-import { viewport } from "@/lib/motion";
+import { useReducedMotion, viewport } from "@/lib/motion";
 
 const contactItems = [
   { icon: Mail, label: "Email", value: personal.email, href: `mailto:${personal.email}` },

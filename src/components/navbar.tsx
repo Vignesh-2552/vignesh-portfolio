@@ -12,7 +12,8 @@ import {
   User,
   type LucideIcon,
 } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
+import { useReducedMotion } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 const items: { id: string; label: string; icon: LucideIcon }[] = [
@@ -53,7 +54,7 @@ export function Navbar() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
     >
-      <div className="flex items-center gap-1 rounded-full border border-white/10 bg-zinc-950/60 p-1 shadow-lg shadow-black/40 backdrop-blur-lg sm:gap-2">
+      <div className="flex items-center gap-0.5 rounded-full border border-white/10 bg-zinc-950/60 p-1 shadow-lg shadow-black/40 backdrop-blur-lg min-[400px]:gap-1 sm:gap-2">
         {items.map(({ id, label, icon: Icon }) => {
           const isActive = active === id;
           return (
@@ -63,7 +64,7 @@ export function Navbar() {
               aria-label={label}
               aria-current={isActive ? "true" : undefined}
               className={cn(
-                "relative rounded-full px-3.5 py-2 text-sm font-medium text-zinc-400 transition-colors hover:text-white md:px-5",
+                "relative rounded-full px-2.5 py-2 text-sm min-[400px]:px-3.5 font-medium text-zinc-400 transition-colors hover:text-white md:px-5",
                 isActive && "text-white"
               )}
             >
@@ -92,7 +93,7 @@ export function Navbar() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Resume"
-          className="flex items-center gap-1.5 rounded-full bg-white px-3.5 py-2 text-sm font-semibold text-zinc-950 transition-colors hover:bg-cyan-200 md:px-5"
+          className="flex items-center gap-1.5 rounded-full bg-white px-2.5 py-2 min-[400px]:px-3.5 text-sm font-semibold text-zinc-950 transition-colors hover:bg-cyan-200 md:px-5"
         >
           <FileText size={16} className="md:hidden" />
           <span className="hidden md:inline">Resume</span>

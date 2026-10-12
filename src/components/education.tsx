@@ -1,11 +1,11 @@
 "use client";
 
 import { GraduationCap } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import { GlowingEffect } from "@/components/motion/glowing-effect";
 import { SectionHeading } from "@/components/section-heading";
 import { education } from "@/data/portfolio";
-import { viewport } from "@/lib/motion";
+import { useReducedMotion, viewport } from "@/lib/motion";
 
 export function Education() {
   const reduced = useReducedMotion();

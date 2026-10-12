@@ -11,12 +11,12 @@ export function Experience() {
     title: job.period.split(" – ")[0].split(" ")[1] ?? job.period,
     subtitle: job.period,
     content: (
-      <article className="relative rounded-[1.5rem] border border-white/10 p-2.5">
+      <article className="relative rounded-[1.5rem] border border-white/10 p-1.5 sm:p-2.5">
         <GlowingEffect spread={40} proximity={64} borderWidth={3} />
-        <div className="relative rounded-xl border border-white/[0.06] bg-zinc-950 p-6 sm:p-8">
+        <div className="relative rounded-xl border border-white/[0.06] bg-zinc-950 p-5 sm:p-8">
           <div className="mb-6 flex flex-wrap items-start justify-between gap-3">
             <div>
-              <h3 className="text-2xl font-semibold tracking-tight text-white">{job.role}</h3>
+              <h3 className="text-xl font-semibold tracking-tight text-white sm:text-2xl">{job.role}</h3>
               <p className="mt-1 text-base text-cyan-300">{job.company}</p>
             </div>
             <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs text-zinc-400">

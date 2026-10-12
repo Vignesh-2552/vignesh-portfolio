@@ -1,7 +1,8 @@
 "use client";
 
 // Adapted from kokonutd "Background Paths" (21st.dev).
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
+import { useReducedMotion } from "@/lib/motion";
 
 function FloatingPaths({ position }: { position: 1 | -1 }) {
   const reduced = useReducedMotion();
@@ -30,13 +31,15 @@ function FloatingPaths({ position }: { position: 1 | -1 }) {
           stroke={p.id % 3 === 0 ? (position === 1 ? "#22d3ee" : "#a78bfa") : "currentColor"}
           strokeWidth={p.width}
           strokeOpacity={0.04 + p.id * 0.012}
-          initial={reduced ? false : { pathLength: 0.3, opacity: 0.6 }}
+          initial={{ pathLength: 0.3, opacity: 0.6 }}
           animate={
             reduced
-              ? undefined
+              ? { pathLength: 1, opacity: 0.6, pathOffset: 0 }
               : { pathLength: 1, opacity: [0.3, 0.6, 0.3], pathOffset: [0, 1, 0] }
           }
-          transition={{ duration: p.duration, repeat: Infinity, ease: "linear" }}
+          transition={
+            reduced ? { duration: 0 } : { duration: p.duration, repeat: Infinity, ease: "linear" }
+          }
         />
       ))}
     </svg>

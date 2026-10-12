@@ -2,22 +2,20 @@
 
 // Adapted from Aceternity UI "Lamp" (21st.dev).
 import type { ReactNode } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
+import { useReducedMotion } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 const ease = { delay: 0.3, duration: 0.8, ease: "easeInOut" as const };
 
 export function LampContainer({ children, className }: { children: ReactNode; className?: string }) {
   const reduced = useReducedMotion();
-  const grow = (from: string, to: string) =>
-    reduced
-      ? { initial: false as const, style: { width: to } }
-      : {
-          initial: { opacity: 0.5, width: from },
-          whileInView: { opacity: 1, width: to },
-          viewport: { once: true },
-          transition: ease,
-        };
+  const grow = (from: string, to: string) => ({
+    initial: { opacity: 0.5, width: from },
+    whileInView: { opacity: 1, width: to },
+    viewport: { once: true },
+    transition: reduced ? { duration: 0 } : ease,
+  });
 
   return (
     <div
@@ -31,7 +29,6 @@ export function LampContainer({ children, className }: { children: ReactNode; cl
           {...grow("15rem", "30rem")}
           className="absolute inset-auto right-1/2 h-56 w-[30rem] overflow-visible"
           style={{
-            ...(reduced ? { width: "30rem" } : {}),
             backgroundImage: "conic-gradient(from 70deg at center top, #22d3ee, transparent, transparent)",
           }}
         >
@@ -42,7 +39,6 @@ export function LampContainer({ children, className }: { children: ReactNode; cl
           {...grow("15rem", "30rem")}
           className="absolute inset-auto left-1/2 h-56 w-[30rem]"
           style={{
-            ...(reduced ? { width: "30rem" } : {}),
             backgroundImage: "conic-gradient(from 290deg at center top, transparent, transparent, #22d3ee)",
           }}
         >

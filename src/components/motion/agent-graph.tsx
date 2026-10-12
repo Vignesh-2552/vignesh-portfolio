@@ -1,8 +1,8 @@
 "use client";
 
 import { useId } from "react";
-import { motion, useReducedMotion } from "motion/react";
-import { viewport } from "@/lib/motion";
+import { motion } from "motion/react";
+import { useReducedMotion, viewport } from "@/lib/motion";
 
 export type AgentGraphNode = {
   id: string;
@@ -76,8 +76,8 @@ export function AgentGraph({ graph }: { graph: AgentGraphData }) {
         className="w-full"
         role="img"
         aria-label={graph.caption}
-        initial={reduced ? undefined : "hidden"}
-        whileInView={reduced ? undefined : "visible"}
+        initial="hidden"
+        whileInView="visible"
         viewport={viewport}
       >
         <defs>
@@ -119,16 +119,14 @@ export function AgentGraph({ graph }: { graph: AgentGraphData }) {
                 strokeDasharray={edge.dashed ? "3 3" : undefined}
                 markerEnd={`url(#${edge.dashed ? markerViolet : markerCyan})`}
                 variants={
-                  reduced
-                    ? undefined
-                    : edge.dashed
-                      ? { hidden: { opacity: 0 }, visible: { opacity: 1 } }
-                      : {
-                          hidden: { pathLength: 0, opacity: 0 },
-                          visible: { pathLength: 1, opacity: 1 },
-                        }
+                  edge.dashed
+                    ? { hidden: { opacity: 0 }, visible: { opacity: 1 } }
+                    : {
+                        hidden: { pathLength: 0, opacity: 0 },
+                        visible: { pathLength: 1, opacity: 1 },
+                      }
                 }
-                transition={{ duration: 0.6, delay: 0.3 + i * 0.15 }}
+                transition={reduced ? { duration: 0 } : { duration: 0.6, delay: 0.3 + i * 0.15 }}
               />
               {!edge.dashed && !reduced && (
                 <motion.path
@@ -162,15 +160,11 @@ export function AgentGraph({ graph }: { graph: AgentGraphData }) {
           return (
             <motion.g
               key={node.id}
-              variants={
-                reduced
-                  ? undefined
-                  : {
-                      hidden: { opacity: 0, y: 6 },
-                      visible: { opacity: 1, y: 0 },
-                    }
-              }
-              transition={{ duration: 0.4, delay: i * 0.1 }}
+              variants={{
+                hidden: { opacity: 0, y: 6 },
+                visible: { opacity: 1, y: 0 },
+              }}
+              transition={reduced ? { duration: 0 } : { duration: 0.4, delay: i * 0.1 }}
             >
               <rect
                 x={node.x}

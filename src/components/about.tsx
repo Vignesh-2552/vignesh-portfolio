@@ -2,7 +2,8 @@
 
 import { useId } from "react";
 import { Activity, Layers, Sparkles, TrendingUp } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
+import { useReducedMotion } from "@/lib/motion";
 import { AnimatedList } from "@/components/motion/animated-list";
 import { BentoCard, BentoGrid } from "@/components/motion/bento-grid";
 import { Marquee } from "@/components/motion/marquee";
@@ -66,8 +67,12 @@ function TransitionBeam() {
             id={id}
             gradientUnits="userSpaceOnUse"
             initial={{ x1: "0%", x2: "10%" }}
-            animate={reduced ? undefined : { x1: ["0%", "100%"], x2: ["10%", "110%"] }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: [0.16, 1, 0.3, 1], repeatDelay: 0.4 }}
+            animate={reduced ? { x1: "0%", x2: "10%" } : { x1: ["0%", "100%"], x2: ["10%", "110%"] }}
+            transition={
+              reduced
+                ? { duration: 0 }
+                : { duration: 2.5, repeat: Infinity, ease: [0.16, 1, 0.3, 1], repeatDelay: 0.4 }
+            }
             y1="0"
             y2="0"
           >
@@ -123,11 +128,11 @@ function ToolCallStream() {
         items={toolCalls.map((c) => (
           <div
             key={c.tool}
-            className="flex items-center gap-3 rounded-xl border border-white/10 bg-zinc-900/80 px-4 py-2.5 backdrop-blur-md"
+            className="flex items-center gap-3 rounded-xl border border-white/10 bg-zinc-900/80 px-3 py-2.5 sm:px-4 backdrop-blur-md"
           >
             <span className={`h-2 w-2 shrink-0 rounded-full ${toneDot[c.tone]}`} />
-            <span className="font-mono text-sm text-zinc-200">{c.tool}()</span>
-            <span className="ml-auto truncate font-mono text-xs text-zinc-500">{c.meta}</span>
+            <span className="truncate font-mono text-sm text-zinc-200">{c.tool}()</span>
+            <span className="ml-auto hidden truncate font-mono text-xs text-zinc-500 min-[400px]:inline">{c.meta}</span>
           </div>
         ))}
       />
@@ -147,7 +152,7 @@ export function About() {
 
         <BentoGrid className="lg:grid-cols-3">
           <BentoCard
-            className="lg:col-span-2"
+            className="md:col-span-2"
             icon={Sparkles}
             name="Agentic systems, end to end"
             description="LangGraph multi-agent workflows, deterministic tool servers, retrieval, streaming and the observability to prove it all works."
@@ -168,7 +173,7 @@ export function About() {
             background={<TransitionBeam />}
           />
           <BentoCard
-            className="lg:col-span-2"
+            className="md:col-span-2"
             icon={Activity}
             name="Every tool call, traced"
             description="10+ typed MCP business tools with human-in-the-loop interrupts, traced through LangSmith and OpenTelemetry into Datadog."
