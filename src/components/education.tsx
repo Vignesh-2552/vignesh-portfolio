@@ -1,47 +1,49 @@
 "use client";
 
 import { GraduationCap } from "lucide-react";
-import { GlowCard } from "@/components/motion/glow-card";
-import { FadeIn } from "@/components/motion/fade-in";
+import { motion, useReducedMotion } from "motion/react";
+import { GlowingEffect } from "@/components/motion/glowing-effect";
 import { SectionHeading } from "@/components/section-heading";
 import { education } from "@/data/portfolio";
+import { viewport } from "@/lib/motion";
 
 export function Education() {
+  const reduced = useReducedMotion();
+
   return (
-    <section className="relative px-6 py-28">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent" />
+    <section className="relative px-4 py-24 sm:px-6">
       <div className="mx-auto max-w-6xl">
         <SectionHeading label="Education" title="Academic background" />
 
-        <FadeIn direction="scale" spring>
-          <GlowCard className="rounded-2xl">
-            <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur-md">
-              <div className="flex flex-wrap items-start justify-between gap-4">
-                <div className="flex items-start gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-cyan-500/30 bg-cyan-500/10 shadow-[0_0_20px_rgba(34,211,238,0.15)]">
-                    <GraduationCap size={22} className="text-cyan-400" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-white">
-                      {education.degree}
-                    </h3>
-                    <p className="mt-1 text-zinc-400">{education.institution}</p>
-                    <p className="text-sm text-zinc-500">{education.affiliation}</p>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <p className="font-mono text-sm text-zinc-500">
-                    {education.period}
-                  </p>
-                  <p className="mt-2 text-3xl font-bold text-cyan-400">
-                    {education.cgpa}
-                  </p>
-                  <p className="text-xs text-zinc-600">CGPA</p>
-                </div>
+        <motion.div
+          className="relative rounded-[1.5rem] border border-white/10 p-2.5"
+          initial={reduced ? false : { opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={viewport}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <GlowingEffect spread={40} proximity={64} borderWidth={3} />
+          <div className="relative flex flex-wrap items-center justify-between gap-6 rounded-xl border border-white/[0.06] bg-zinc-950 p-6 sm:p-8">
+            <div className="flex items-start gap-4">
+              <div className="rounded-lg border border-white/10 bg-white/[0.03] p-3">
+                <GraduationCap size={22} className="text-zinc-300" />
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold text-white">{education.degree}</h3>
+                <p className="mt-1 text-zinc-400">{education.institution}</p>
+                <p className="text-sm text-zinc-500">
+                  {education.affiliation} · {education.period}
+                </p>
               </div>
             </div>
-          </GlowCard>
-        </FadeIn>
+            <div className="sm:text-right">
+              <p className="bg-linear-to-b from-white to-white/50 bg-clip-text text-4xl font-semibold text-transparent">
+                {education.cgpa}
+              </p>
+              <p className="font-mono text-xs tracking-widest text-zinc-600 uppercase">CGPA</p>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,149 +1,103 @@
 "use client";
 
+// Adapted from "Tubelight Navbar" (21st.dev).
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { buttonVariants } from "@/components/ui/button";
-import { easeTransition } from "@/lib/motion";
-import { navLinks, personal } from "@/data/portfolio";
+import {
+  Briefcase,
+  Code2,
+  FileText,
+  FolderGit2,
+  Home,
+  Mail,
+  User,
+  type LucideIcon,
+} from "lucide-react";
+import { motion, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils";
 
+const items: { id: string; label: string; icon: LucideIcon }[] = [
+  { id: "top", label: "Home", icon: Home },
+  { id: "about", label: "About", icon: User },
+  { id: "skills", label: "Skills", icon: Code2 },
+  { id: "experience", label: "Experience", icon: Briefcase },
+  { id: "projects", label: "Projects", icon: FolderGit2 },
+  { id: "contact", label: "Contact", icon: Mail },
+];
+
 export function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
   const reduced = useReducedMotion();
+  const [active, setActive] = useState("top");
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    onScroll();
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    const sections = items
+      .map((i) => document.getElementById(i.id))
+      .filter((el): el is HTMLElement => el !== null);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        }
+      },
+      { rootMargin: "-45% 0px -50% 0px" }
+    );
+    sections.forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <motion.header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "border-b border-white/10 bg-[#08080f]/80 backdrop-blur-xl"
-          : "bg-transparent"
-      }`}
-      initial={reduced ? false : { y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ ...easeTransition, delay: 0.05 }}
+    <motion.nav
+      aria-label="Primary"
+      className="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 sm:top-5 sm:bottom-auto"
+      initial={reduced ? false : { opacity: 0, y: -16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
     >
-      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+      <div className="flex items-center gap-1 rounded-full border border-white/10 bg-zinc-950/60 p-1 shadow-lg shadow-black/40 backdrop-blur-lg sm:gap-2">
+        {items.map(({ id, label, icon: Icon }) => {
+          const isActive = active === id;
+          return (
+            <a
+              key={id}
+              href={`#${id}`}
+              aria-label={label}
+              aria-current={isActive ? "true" : undefined}
+              className={cn(
+                "relative rounded-full px-3.5 py-2 text-sm font-medium text-zinc-400 transition-colors hover:text-white md:px-5",
+                isActive && "text-white"
+              )}
+            >
+              <span className="hidden md:inline">{label}</span>
+              <span className="md:hidden">
+                <Icon size={18} strokeWidth={2.2} />
+              </span>
+              {isActive && (
+                <motion.span
+                  layoutId="tubelight"
+                  className="absolute inset-0 -z-10 rounded-full bg-white/[0.06]"
+                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                >
+                  <span className="absolute -top-[5px] left-1/2 h-1 w-8 -translate-x-1/2 rounded-t-full bg-cyan-300 sm:-top-[5px]">
+                    <span className="absolute -top-2 -left-2 h-6 w-12 rounded-full bg-cyan-300/25 blur-md" />
+                    <span className="absolute -top-1 h-6 w-8 rounded-full bg-cyan-300/25 blur-md" />
+                    <span className="absolute top-0 left-2 h-4 w-4 rounded-full bg-cyan-300/25 blur-sm" />
+                  </span>
+                </motion.span>
+              )}
+            </a>
+          );
+        })}
         <a
-          href="#"
-          className="font-mono text-sm font-semibold tracking-wider text-white"
+          href="/resume"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Resume"
+          className="flex items-center gap-1.5 rounded-full bg-white px-3.5 py-2 text-sm font-semibold text-zinc-950 transition-colors hover:bg-cyan-200 md:px-5"
         >
-          VA<span className="text-cyan-400">.</span>
+          <FileText size={16} className="md:hidden" />
+          <span className="hidden md:inline">Resume</span>
         </a>
-
-        <ul className="hidden items-center gap-8 md:flex">
-          {navLinks.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className="group relative text-sm text-zinc-400 transition-colors hover:text-cyan-400"
-              >
-                {link.label}
-                <span className="absolute -bottom-1 left-0 h-px w-0 bg-gradient-to-r from-cyan-400 to-violet-400 transition-all duration-300 group-hover:w-full" />
-              </a>
-            </li>
-          ))}
-        </ul>
-
-        <div className="hidden items-center gap-3 md:flex">
-          <a
-            href="/resume"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm text-zinc-400 transition-colors hover:text-cyan-400"
-          >
-            Resume
-          </a>
-          <motion.a
-            href={`mailto:${personal.email}`}
-            className={cn(
-              buttonVariants({ size: "sm" }),
-              "border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500/20"
-            )}
-            whileHover={reduced ? undefined : { scale: 1.05 }}
-            whileTap={reduced ? undefined : { scale: 0.97 }}
-            transition={easeTransition}
-          >
-            Get in Touch
-          </motion.a>
-        </div>
-
-        <button
-          type="button"
-          className="text-zinc-400 md:hidden"
-          onClick={() => setOpen(!open)}
-          aria-label="Toggle menu"
-        >
-          {open ? <X size={22} /> : <Menu size={22} />}
-        </button>
-      </nav>
-
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            className="border-b border-white/10 bg-[#08080f]/95 px-6 py-4 backdrop-blur-xl md:hidden"
-            initial={reduced ? false : { height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={easeTransition}
-          >
-            <ul className="flex flex-col gap-4">
-              {navLinks.map((link, i) => (
-                <motion.li
-                  key={link.href}
-                  initial={reduced ? false : { x: -12, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ ...easeTransition, delay: i * 0.05 }}
-                >
-                  <a
-                    href={link.href}
-                    className="block text-sm text-zinc-300"
-                    onClick={() => setOpen(false)}
-                  >
-                    {link.label}
-                  </a>
-                </motion.li>
-              ))}
-              <motion.li
-                initial={reduced ? false : { x: -12, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ ...easeTransition, delay: navLinks.length * 0.05 }}
-              >
-                <a
-                  href="/resume"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block text-sm text-zinc-300"
-                  onClick={() => setOpen(false)}
-                >
-                  Resume
-                </a>
-              </motion.li>
-              <motion.li
-                initial={reduced ? false : { x: -12, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ ...easeTransition, delay: (navLinks.length + 1) * 0.05 }}
-              >
-                <a
-                  href={`mailto:${personal.email}`}
-                  className="block text-sm text-cyan-400"
-                  onClick={() => setOpen(false)}
-                >
-                  Get in Touch
-                </a>
-              </motion.li>
-            </ul>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.header>
+      </div>
+    </motion.nav>
   );
 }

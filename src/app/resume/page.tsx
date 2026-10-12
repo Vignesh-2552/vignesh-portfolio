@@ -21,7 +21,7 @@ export default function ResumePage() {
       <div className="mx-auto max-w-3xl px-8 py-16 print:px-0 print:py-0">
         <header className="border-b border-zinc-300 pb-4">
           <h1 className="text-3xl font-bold tracking-tight">{personal.name}</h1>
-          <p className="mt-1 text-lg text-zinc-700">{personal.title}</p>
+          <p className="mt-1 text-lg text-zinc-700">{personal.headline}</p>
           <p className="mt-3 text-sm text-zinc-600">
             {personal.phone} · {personal.email} · {personal.location}
           </p>
@@ -95,8 +95,8 @@ export default function ResumePage() {
                 </h3>
                 <ul className="mt-1.5 list-disc space-y-1 pl-5">
                   {project.highlights.map((h) => (
-                    <li key={h} className="text-sm leading-relaxed text-zinc-700">
-                      {h}
+                    <li key={h.label} className="text-sm leading-relaxed text-zinc-700">
+                      <span className="font-semibold text-zinc-900">{h.label}:</span> {h.text}
                     </li>
                   ))}
                 </ul>
