@@ -46,7 +46,7 @@ const personSchema = {
 
 export default function Home() {
   return (
-    <div className="bg-[#08080f] text-foreground">
+    <div className="bg-(--page-bg) text-foreground">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
