@@ -93,6 +93,11 @@ export default function ResumePage() {
                 <h3 className="text-sm font-semibold text-zinc-900">
                   {project.name} — {project.subtitle}
                 </h3>
+                {project.links && (
+                  <p className="text-xs text-zinc-500">
+                    {project.links.map((l) => l.href.replace("https://", "")).join(" · ")}
+                  </p>
+                )}
                 <ul className="mt-1.5 list-disc space-y-1 pl-5">
                   {project.highlights.map((h) => (
                     <li key={h.label} className="text-sm leading-relaxed text-zinc-700">

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { ArrowUpRight } from "lucide-react";
 import {
   motion,
   useScroll,
@@ -69,7 +70,12 @@ function ProjectCard({
 
           <div className="relative flex flex-col">
             <span className="font-mono text-xs tracking-widest text-zinc-500 uppercase">
-              {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")} · AI Platform
+              {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")} ·{" "}
+              {project.kind === "open-source" ? (
+                <span className="text-emerald-300">Open Source · PyPI</span>
+              ) : (
+                "AI Platform"
+              )}
             </span>
             <h3 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-4xl">
               {project.name}
@@ -92,6 +98,17 @@ function ProjectCard({
           <div className="relative flex flex-col justify-between gap-6">
             <AgentGraph graph={project.graph} />
             <div className="space-y-4">
+              {project.install && (
+                <div>
+                  <p className="mb-2 font-mono text-[11px] tracking-widest text-zinc-600 uppercase">
+                    Install
+                  </p>
+                  <code className="block overflow-x-auto rounded-lg border border-white/[0.08] bg-black/40 px-3 py-2 font-mono text-sm text-emerald-300">
+                    <span className="text-zinc-600 select-none">$ </span>
+                    {project.install}
+                  </code>
+                </div>
+              )}
               <div>
                 <p className="mb-2 font-mono text-[11px] tracking-widest text-zinc-600 uppercase">
                   Stack
@@ -107,6 +124,22 @@ function ProjectCard({
                   ))}
                 </div>
               </div>
+              {project.links && (
+                <div className="flex flex-wrap gap-2">
+                  {project.links.map((link) => (
+                    <a
+                      key={link.label}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm font-medium text-zinc-200 transition-colors hover:border-cyan-400/40 hover:text-white"
+                    >
+                      {link.label}
+                      <ArrowUpRight size={14} />
+                    </a>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -129,7 +162,7 @@ export function Projects() {
         <SectionHeading
           label="Projects"
           title="Featured work"
-          description="Production AI platforms spanning agentic support, conversational commerce, and multi-agent development."
+          description="An open-source MCP server on PyPI, plus three AI platforms spanning agentic support, conversational commerce, and multi-agent development."
         />
 
         <div ref={containerRef} className="space-y-8 stack:space-y-0">

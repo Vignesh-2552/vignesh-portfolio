@@ -125,9 +125,66 @@ export const experience = [
   },
 ];
 
-export const projects = [
+export type Project = {
+  name: string;
+  subtitle: string;
+  /** "open-source" projects are public and verifiable; "platform" ones are internal Brightspot work */
+  kind: "open-source" | "platform";
+  description: string;
+  tech: string[];
+  graph: AgentGraphData;
+  highlights: { label: string; text: string }[];
+  links?: { label: string; href: string }[];
+  install?: string;
+};
+
+export const projects: Project[] = [
+  {
+    name: "OpsInsight MCP",
+    subtitle: "Read-only Incident Investigation MCP Server",
+    kind: "open-source",
+    description:
+      "Open-source FastMCP server, published on PyPI, that lets Claude Desktop or Cursor investigate a support ticket across PostgreSQL, AWS CloudWatch, New Relic and Linear/Jira. Every query is validated before it runs and every result is PII-redacted.",
+    tech: ["Python", "FastMCP", "SQLAlchemy", "sqlglot", "boto3", "Redis", "uv"],
+    links: [
+      { label: "GitHub", href: "https://github.com/Vignesh-2552/mcp-log-db-investigator" },
+      { label: "PyPI", href: "https://pypi.org/project/opsinsight-mcp/" },
+    ],
+    install: "uvx opsinsight-mcp",
+    graph: {
+      caption: "Validate → execute → redact, across every source",
+      nodes: [
+        { id: "client", label: "MCP Client", x: 6, y: 52, w: 64 },
+        { id: "guard", label: "AST Guardrail", x: 96, y: 52, w: 84, accent: "cyan" },
+        { id: "pg", label: "PostgreSQL", x: 208, y: 6, w: 86 },
+        { id: "cw", label: "CloudWatch", x: 208, y: 52, w: 86 },
+        { id: "nr", label: "New Relic", x: 208, y: 98, w: 86, accent: "violet" },
+      ],
+      edges: [
+        { from: "client", to: "guard" },
+        { from: "guard", to: "pg" },
+        { from: "guard", to: "cw" },
+        { from: "guard", to: "nr" },
+      ],
+    } satisfies AgentGraphData,
+    highlights: [
+      {
+        label: "Guardrails, not trust",
+        text: "The client model writes the query; the server's job is to make it safe. SQL is AST-parsed with sqlglot to reject writes, blocked catalogs and renamed sensitive columns, NRQL and CloudWatch queries have their limits and time windows enforced, and results are PII-redacted before they reach the model.",
+      },
+      {
+        label: "19 tools + 3 investigation prompts",
+        text: "Schema discovery, read-only SQL, Logs Insights (capped by bytes scanned), NRQL, and ticket loading from Linear/Jira. trace_request follows one id across the DB and both log sources into a single timeline, and /investigate_incident turns a ticket into an incident report.",
+      },
+      {
+        label: "Published on PyPI with no stored secrets",
+        text: "Pushing a v* tag triggers GitHub Actions: it checks the tag matches pyproject.toml, runs ruff and pytest (85% coverage gate), builds the wheel with uv, and publishes through PyPI trusted publishing (OIDC). Users install it with one uvx line in their MCP config.",
+      },
+    ],
+  },
   {
     name: "Ara Support",
+    kind: "platform",
     subtitle: "Agentic Customer Support Platform",
     description:
       "Enterprise agentic support platform with MCP tool servers, streaming chat, and human-in-the-loop escalation for ticket routing, triage, and resolution.",
@@ -163,6 +220,7 @@ export const projects = [
   },
   {
     name: "Ara Caddio",
+    kind: "platform",
     subtitle: "AI Conversational Commerce Platform",
     description:
       "Conversational commerce platform with hybrid product retrieval, threaded streaming chat, and admin content management for product discovery.",
@@ -198,6 +256,7 @@ export const projects = [
   },
   {
     name: "Ara-Cascade",
+    kind: "platform",
     subtitle: "Multi-Agent Dev Automation Platform",
     description:
       "Multi-agent platform converting feature ideas into PRDs, architecture docs, and deployment guidance through a 5-stage approval pipeline.",

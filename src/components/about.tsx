@@ -33,7 +33,7 @@ function PlatformStack() {
   const reduced = useReducedMotion();
   return (
     <div className="absolute inset-x-6 top-5 flex flex-col items-center gap-2">
-      {projects.map((p, i) => (
+      {projects.filter((p) => p.kind === "platform").map((p, i) => (
         <motion.div
           key={p.name}
           className="w-full rounded-xl border border-white/10 bg-zinc-900/80 px-4 py-2 shadow-xl shadow-black/40"
