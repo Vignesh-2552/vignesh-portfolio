@@ -146,8 +146,8 @@ export function About() {
       <div className="mx-auto max-w-6xl">
         <SectionHeading
           label="About"
-          title="Engineering AI that works in production"
-          description="I build the backend infrastructure that decides whether an AI product is ready to scale — MCP tool servers, hybrid RAG, FastAPI services, and LLM observability. I own backend architecture across 3 AI platforms at Brightspot."
+          title="Shipping agentic AI products, end to end"
+          description="I build the parts of an AI product people actually use and the plumbing behind them: streaming chat interfaces, human-in-the-loop flows, FastAPI services, integrations and MCP tool servers. I work across 3 AI platforms at Brightspot and maintain an open-source MCP server on PyPI."
         />
 
         <BentoGrid className="lg:grid-cols-3">
@@ -155,7 +155,7 @@ export function About() {
             className="md:col-span-2"
             icon={Sparkles}
             name="Agentic systems, end to end"
-            description="LangGraph multi-agent workflows, deterministic tool servers, retrieval, streaming and the observability to prove it all works."
+            description="From the chat interface to the tool server: streaming responses, human-in-the-loop approvals, LangGraph workflows, retrieval and the integrations around them."
             background={<CompetencyMarquee />}
           />
           <BentoCard

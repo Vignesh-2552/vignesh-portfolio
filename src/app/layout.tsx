@@ -18,9 +18,12 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: "Vignesh A — AI Engineer",
   description:
-    "AI Engineer focused on getting agentic systems to production — MCP tool servers, hybrid RAG pipelines, FastAPI services, and LLM observability at Brightspot Technology Solutions.",
+    "Applied AI Engineer shipping agentic products end to end: streaming chat interfaces, human-in-the-loop flows, FastAPI services, MCP tool servers and integrations. Author of OpsInsight MCP on PyPI.",
   keywords: [
     "AI Engineer",
+    "Applied AI Engineer",
+    "MCP",
+    "Full-Stack AI",
     "LangGraph",
     "FastMCP",
     "RAG",
@@ -34,7 +37,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Vignesh A — AI Engineer",
     description:
-      "Getting agentic systems to production — MCP tool servers, hybrid RAG pipelines, FastAPI services, and LLM observability.",
+      "Shipping agentic AI products end to end: chat interfaces, human-in-the-loop flows, FastAPI services and MCP tool servers.",
     type: "website",
   },
 };

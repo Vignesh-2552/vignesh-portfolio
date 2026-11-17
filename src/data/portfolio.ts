@@ -3,16 +3,16 @@ import type { AgentGraphData } from "@/components/motion/agent-graph";
 export const personal = {
   name: "Vignesh A",
   title: "AI Engineer",
-  headline: "AI Engineer | Multi-Agent Systems | RAG | MCP | Backend Architecture",
+  headline: "AI Engineer | Agentic Apps | MCP Tooling | Full-Stack (FastAPI + Next.js)",
   location: "Coimbatore, Tamil Nadu",
   phone: "+91 7598538927",
   email: "vignesha2552@gmail.com",
   github: "https://github.com/Vignesh-2552",
   linkedin: "https://linkedin.com/in/vignesh-a-11a00b269",
   tagline:
-    "Getting agentic systems to production — MCP tool servers, hybrid RAG pipelines, FastAPI services, and LLM observability that hold up under real load.",
+    "I ship agentic AI products end to end: streaming chat interfaces, human-in-the-loop flows, FastAPI services, and the MCP tool servers and integrations behind them.",
   summary:
-    "AI Engineer focused on building production-ready agentic systems — backend infrastructure spanning MCP tool servers, hybrid RAG pipelines, FastAPI services, and LLM observability. Owns backend architecture across 3 AI platforms at Brightspot serving customer support, commerce, and development automation. Transitioned from PHP/MySQL backend engineering into LangGraph multi-agent architecture in 2024.",
+    "Applied AI Engineer who ships LLM features end to end, from streaming chat interfaces and human-in-the-loop approval flows to FastAPI services, OAuth integrations and MCP tool servers. Builds across 3 AI platforms at Brightspot covering customer support, conversational commerce and development automation. Author of OpsInsight MCP, an open-source, read-only incident-investigation MCP server published on PyPI. Moved from PHP/MySQL backend engineering into LangGraph agent development in 2024.",
 };
 
 export const highlights = [
@@ -103,7 +103,7 @@ export const experience = [
     period: "Jul 2024 – Present",
     location: "Coimbatore, Tamil Nadu",
     highlights: [
-      "Owned backend architecture, tool-server design, and observability infrastructure across 3 AI platforms currently in pre-production (Ara Support, Ara Caddio, Ara-Cascade) — built on Python, FastAPI, LangGraph, and FastMCP.",
+      "Built across 3 AI platforms currently in pre-production (Ara Support, Ara Caddio, Ara-Cascade) on Python, FastAPI, LangGraph and FastMCP: agent-facing frontends, API routes, OAuth integrations, MCP tool servers and observability.",
       "Developed LangGraph agent workflows with subgraph decomposition, persistent memory, interrupt-driven human-in-the-loop escalation, LLM tool-calling, and conditional routing — reducing manual customer support handling by 60% in internal pilot testing across ticket routing, triage, and resolution flows.",
       "Built FastMCP tool servers exposing 10+ structured business tools (orders, customers, refunds, reservations, products) enabling agents to execute deterministic workflows over live CRM data, eliminating free-form hallucination in transactional operations.",
       "Architected hybrid RAG pipelines using QdrantDB (dense + sparse), query rewriting, cohort reranking, and cross-encoder reranking — improving top-5 retrieval precision by 40% over cosine similarity baseline.",
@@ -323,13 +323,14 @@ export const projects: Project[] = [
 ];
 
 export const competencies = [
-  "LangGraph multi-agent workflows with subgraph decomposition",
-  "FastMCP tool servers and deterministic CRM integrations",
-  "Hybrid RAG pipelines with dense + sparse retrieval",
+  "End-to-end agentic product delivery with Next.js, AssistantUI and FastAPI",
+  "Human-in-the-loop flows with LangGraph interrupts and checkpointing",
+  "MCP tool servers with read-only guardrails and PII redaction",
+  "OAuth and third-party integrations (Linear, Notion, Jira)",
   "SSE streaming and sub-second first-token delivery",
-  "LLM observability with LangSmith, OpenTelemetry, and Datadog",
-  "Production FastAPI microservices and webhook ingestion",
-  "Next.js 15 full-stack delivery with AssistantUI",
+  "Hybrid RAG pipelines with dense + sparse retrieval",
+  "LLM observability with LangSmith, OpenTelemetry and Datadog",
+  "Python packaging and release automation (uv, GitHub Actions, PyPI)",
 ];
 
 export const education = {

@@ -11,7 +11,7 @@ import { Spotlight } from "@/components/motion/spotlight";
 import { highlights, personal } from "@/data/portfolio";
 
 // "Animated Hero" rotating words (21st.dev)
-const rotating = ["agentic systems", "MCP tool servers", "hybrid RAG", "LLM observability"];
+const rotating = ["agentic products", "MCP tool servers", "human-in-the-loop AI","streaming chat UIs"];
 
 function RotatingWords() {
   const reduced = useReducedMotion();

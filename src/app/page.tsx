@@ -35,12 +35,13 @@ const personSchema = {
     name: education.institution,
   },
   knowsAbout: [
-    "AI Engineering",
+    "Applied AI Engineering",
     "LangGraph",
-    "Multi-Agent Systems",
+    "Model Context Protocol (MCP)",
+    "Human-in-the-loop AI",
     "RAG Pipelines",
     "FastAPI",
-    "MCP Tool Servers",
+    "Next.js",
   ],
 };
 
