@@ -18,15 +18,22 @@ export type AgentGraphEdge = {
   to: string;
   /** Conditional path (e.g. human-in-the-loop interrupt) — rendered dashed, no flow pulse */
   dashed?: boolean;
+  /** Loop back between nodes on the same row, arcing above ("up") or below ("down") */
+  loop?: "up" | "down";
+  /** Force a top-to-bottom edge even when the target sits to the right (e.g. fan-outs) */
+  vertical?: boolean;
 };
 
 export type AgentGraphData = {
   caption: string;
   nodes: AgentGraphNode[];
   edges: AgentGraphEdge[];
+  /** viewBox height; width is always 300. Defaults to 128. */
+  height?: number;
 };
 
 const NODE_H = 24;
+const LOOP_ARC = 20;
 
 const accentStyles = {
   cyan: {
@@ -46,20 +53,49 @@ const accentStyles = {
   },
 } as const;
 
-function edgePath(from: AgentGraphNode, to: AgentGraphNode) {
-  if (to.x >= from.x + from.w + 8) {
-    const x1 = from.x + from.w;
-    const y1 = from.y + NODE_H / 2;
-    const x2 = to.x;
-    const y2 = to.y + NODE_H / 2;
-    const mx = (x1 + x2) / 2;
-    return `M ${x1} ${y1} C ${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}`;
+function edgePath(
+  from: AgentGraphNode,
+  to: AgentGraphNode,
+  { loop, vertical }: Pick<AgentGraphEdge, "loop" | "vertical"> = {}
+) {
+  const fx = from.x + from.w / 2;
+  const tx = to.x + to.w / 2;
+
+  // Loop-back arc between nodes on the same row
+  if (loop) {
+    const y1 = loop === "up" ? from.y : from.y + NODE_H;
+    const y2 = loop === "up" ? to.y : to.y + NODE_H;
+    const cy = loop === "up" ? Math.min(y1, y2) - LOOP_ARC : Math.max(y1, y2) + LOOP_ARC;
+    return `M ${fx} ${y1} C ${fx} ${cy}, ${tx} ${cy}, ${tx} ${y2}`;
   }
-  const x1 = from.x + from.w / 2;
+
+  const fy = from.y + NODE_H / 2;
+  const ty = to.y + NODE_H / 2;
+  const sameRow = Math.abs(from.y - to.y) < 4;
+
+  // Rightward
+  if (!vertical && to.x >= from.x + from.w + 8) {
+    const x1 = from.x + from.w;
+    const x2 = to.x;
+    const mx = (x1 + x2) / 2;
+    return `M ${x1} ${fy} C ${mx} ${fy}, ${mx} ${ty}, ${x2} ${ty}`;
+  }
+  // Leftward on the same row
+  if (sameRow && to.x + to.w + 8 <= from.x) {
+    const x1 = from.x;
+    const x2 = to.x + to.w;
+    return `M ${x1} ${fy} L ${x2} ${ty}`;
+  }
+  // Upward
+  if (to.y < from.y) {
+    const y1 = from.y;
+    const y2 = to.y + NODE_H;
+    return `M ${fx} ${y1} C ${fx} ${y1 - 34}, ${tx} ${y2 + 34}, ${tx} ${y2}`;
+  }
+  // Downward
   const y1 = from.y + NODE_H;
-  const x2 = to.x + to.w / 2;
   const y2 = to.y;
-  return `M ${x1} ${y1} C ${x1} ${y1 + 34}, ${x2} ${y2 - 34}, ${x2} ${y2}`;
+  return `M ${fx} ${y1} C ${fx} ${y1 + 34}, ${tx} ${y2 - 34}, ${tx} ${y2}`;
 }
 
 export function AgentGraph({ graph }: { graph: AgentGraphData }) {
@@ -72,7 +108,7 @@ export function AgentGraph({ graph }: { graph: AgentGraphData }) {
   return (
     <figure className="mb-4 rounded-xl border border-white/10 bg-black/30 p-3">
       <motion.svg
-        viewBox="0 0 300 128"
+        viewBox={`0 0 300 ${graph.height ?? 128}`}
         className="w-full"
         role="img"
         aria-label={graph.caption}
@@ -106,7 +142,7 @@ export function AgentGraph({ graph }: { graph: AgentGraphData }) {
         </defs>
 
         {graph.edges.map((edge, i) => {
-          const d = edgePath(byId[edge.from], byId[edge.to]);
+          const d = edgePath(byId[edge.from], byId[edge.to], edge);
           return (
             <g key={`${edge.from}-${edge.to}`}>
               <motion.path
